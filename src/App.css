@@ -34,7 +34,7 @@ i {
 }
 
 .container-app {
-  margin: 100px auto;
+  margin: 10vh auto auto auto;
   width: max(300px, 60vw);
   background-color: #ffffff10;
   backdrop-filter: blur(12px);
