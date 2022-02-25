@@ -1,0 +1,72 @@
+body {
+  background-image: url('back.jpeg');
+  background-size: cover;
+  color: whitesmoke;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+span {
+  line-height: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+i {
+  padding-top: 10px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-app {
+  margin: 100px auto;
+  width: max(300px, 60vw);
+  background-color: #ffffff10;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 40px;
+  padding: 20px;
+}
+
+.container-params {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttons {
+  margin: auto;
+  gap: 10px;
+  font-size: 2rem;
+}
+
+.container-timer {
+
+}
+
+.container-timer span {
+  font-size: 3rem;
+}
+
+#time-left {
+  font-size: 4rem;
+}
+
+#no-margin {
+  margin-left: -20px;
+}
