@@ -20,6 +20,8 @@ function Clock ({resetTimer, session_timer, break_timer}) {
   },[session_timer, break_timer, sessionType])
 
   useEffect( () => {
+    console.log(timeLeft.toISOString())
+    console.log(timeLeft.toISOString().substr(11, 8))
     let intervalo = null;
     if (active) {
       intervalo = setInterval(() => {
@@ -31,13 +33,17 @@ function Clock ({resetTimer, session_timer, break_timer}) {
       console.log('entre a frenar')
       clearInterval(intervalo);
     }
-    if (timeLeft.toISOString().substr(14, 5) === '00:00') {
+    if (timeLeft.toISOString().substr(11, 8) === '00:00:00') {
       audio.play();
-      setTimeout(() => {if (sessionType === 'Session') {
-        setType('Break');
-      } else {
-        setType('Session');
-      }
+      setTimeout(() => {
+        if (sessionType === 'Session') {
+          setType('Break');
+        } else {
+          setType('Session');
+        }
+      }, 500);
+
+      setTimeout(() => {
         audio.pause();
         audio.currentTime = 0;
       },1000);
@@ -50,18 +56,29 @@ function Clock ({resetTimer, session_timer, break_timer}) {
     setTimeLeft(prev => {console.log(timeLeft); return new Date(prev.getTime() - 1000)})
   }
 
+  function reset() {
+    resetTimer();
+    setType('Session');
+    setTimeLeft(new Date(session_timer * 60000));
+    setActive(false);
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
   return(
       <div className='flex container-timer'>
         <h2 id="timer-label">{sessionType}</h2>
         <span id="time-left">{
-          timeLeft.toISOString().substr(14, 5) //+ ':' + timeLeft.toISOString().substr(2, 2)
+          (timeLeft.toISOString().substr(11, 8) === '01:00:00')
+              ? '60:00'
+              : timeLeft.toISOString().substr(14, 5)
         }</span>
         <div>
           <span id='start_stop' onClick={() => setActive(prevState => {return !prevState})}>
             <MaterialIcon icon='pause' color='white' size='medium'/>
             <MaterialIcon icon='play_arrow' color='white' size='medium' id='no-margin'/>
           </span>
-          <MaterialIcon icon='replay' id='reset' color='white' size='medium' onClick={() => {resetTimer(); setType('Session'); setTimeLeft(new Date(session_timer * 60000))}}/>
+          <MaterialIcon icon='replay' id='reset' color='white' size='medium' onClick={reset}/>
           <audio
               id="beep"
               preload="auto"
@@ -79,9 +96,6 @@ function mapStateToProps(state) {
   return {
     session_timer: state.session_timer,
     break_timer: state.break_timer
-    // session_type: state.session_type,
-    // time_left: state.time_left,
-    // active: state.active
   }
 }
 
