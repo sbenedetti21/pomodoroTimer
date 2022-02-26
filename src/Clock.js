@@ -41,7 +41,7 @@ function Clock ({resetTimer, session_timer, break_timer}) {
         } else {
           setType('Session');
         }
-      }, 500);
+      }, 1000);
 
       setTimeout(() => {
         audio.pause();
